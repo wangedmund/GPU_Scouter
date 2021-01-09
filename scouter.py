@@ -20,7 +20,7 @@ class Scouter():
     def sendToDiscord(self, link):
         #<@&691835932835577856>
         d = {
-        "content": "\nBuy Now:\n" + link
+        "content": "<@&691835932835577856>\nBuy Now:\n" + link
     }
         requests.post(WEBHOOK, json=d)
     def scout(self):
