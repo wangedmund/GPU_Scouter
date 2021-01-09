@@ -3,20 +3,24 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import os 
-import sys
+from multiprocessing import Process
 
 WEBHOOK = "https://discord.com/api/webhooks/758151139383443478/XURX5jr3xmCPN6OPoTV2bGP-YLhD8K_c4roR1_KivVZZ8TnPfOuuQqQVyrJdxQP1DV2A"
 RTX3070LINK = "https://www.bestbuy.com/site/nvidia-geforce-rtx-3070-8gb-gddr6-pci-express-4-0-graphics-card-dark-platinum-and-black/6429442.p?skuId=6429442"
 RTX3080LINK = "https://www.bestbuy.com/site/nvidia-geforce-rtx-3080-10gb-gddr6x-pci-express-4-0-graphics-card-titanium-and-black/6429440.p?skuId=6429440"
+HYPERXBLACK = "https://www.bestbuy.com/site/hyperx-cloud-alpha-pro-wired-stereo-gaming-headset-for-pc-ps4-xbox-one-blackout-black/6434292.p?skuId=6434292"
+HYPERXRED = "https://www.bestbuy.com/site/hyperx-cloud-alpha-wired-stereo-gaming-headset-for-pc-ps4-xbox-one-and-nintendo-switch-red-black/6100109.p?skuId=6100109"
 
 LOCAL_PATH = os.getcwd() + "\chromedriver.exe"
 
 class Scouter():
-    def __init__(self, link):
+    def __init__(self, link, name):
         self.link = link
+        self.name = name
     def sendToDiscord(self, link):
+        #<@&691835932835577856>
         d = {
-        "content": "<@&691835932835577856>\nBuy Now:\n" + link
+        "content": "\nBuy Now:\n" + link
     }
         requests.post(WEBHOOK, json=d)
     def scout(self):
@@ -32,21 +36,18 @@ class Scouter():
             try:
                 driver.find_element(By.XPATH, '//button[text()="Add to Cart"]')
             except:
-                print("element could not be found")
+                print(self.name + " could not be found")
                 driver.refresh()
                 continue
-            print("add to cart button open")
+            print(self.name + " add to cart button found")
             self.sendToDiscord(self.link)
             break
-inp = sys.argv[1]
-link = ""
-if inp == "3070":
-    link = "https://www.bestbuy.com/site/hyperx-cloud-alpha-pro-wired-stereo-gaming-headset-for-pc-ps4-xbox-one-blackout-black/6434292.p?skuId=6434292"
-elif inp == "3080":
-    link = "https://www.bestbuy.com/site/hyperx-cloud-alpha-wired-stereo-gaming-headset-for-pc-ps4-xbox-one-and-nintendo-switch-red-black/6100109.p?skuId=6100109"
-else:
-    raise KeyboardInterrupt
-scouter = Scouter(link)
-scouter.scout()
+if __name__=='__main__':
+    scouter1 = Scouter(HYPERXBLACK, "3070")
+    scouter2 = Scouter(HYPERXRED, "3080")
+    p1 = Process(target = scouter1.scout)
+    p1.start()
+    p2 = Process(target = scouter2.scout)
+    p2.start()
 
 
