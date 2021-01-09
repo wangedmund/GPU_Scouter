@@ -43,11 +43,12 @@ class Scouter():
             self.sendToDiscord(self.link)
             break
 if __name__=='__main__':
-    scouter1 = Scouter(HYPERXBLACK, "3070")
-    scouter2 = Scouter(HYPERXRED, "3080")
-    p1 = Process(target = scouter1.scout)
-    p1.start()
-    p2 = Process(target = scouter2.scout)
-    p2.start()
+    while True:
+        scouter1 = Scouter(RTX3070LINK, "3070")
+        scouter2 = Scouter(RTX3080LINK, "3080")
+        p1 = Process(target = scouter1.scout)
+        p1.start()
+        p2 = Process(target = scouter2.scout)
+        p2.start()
 
 
