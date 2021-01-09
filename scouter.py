@@ -34,7 +34,7 @@ class Scouter():
         driver.get(self.link)
         while True:
             try:
-                driver.find_element(By.XPATH, '//button[text()="Add to Cart"]')
+                elem = driver.find_element(By.XPATH, '//button[text()="Add to Cart"]')
             except:
                 print(self.name + " could not be found")
                 driver.refresh()
