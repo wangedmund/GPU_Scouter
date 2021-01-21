@@ -41,7 +41,7 @@ class Scouter():
                 driver.refresh()
                 continue
             print(self.name + " add to cart button found")
-            self.sendToDiscord(self.link)
+            # self.sendToDiscord(self.link)
             
 if __name__=='__main__':
     scouter1 = Scouter(RTX3070LINK, "3070")
