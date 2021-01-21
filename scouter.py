@@ -30,8 +30,8 @@ class Scouter():
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
-        # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-        driver = webdriver.Chrome(LOCAL_PATH)
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+        # driver = webdriver.Chrome(LOCAL_PATH)
         driver.get(self.link)
         while True:
             try:
@@ -41,7 +41,7 @@ class Scouter():
                 driver.refresh()
                 continue
             print(self.name + " add to cart button found")
-            # self.sendToDiscord(self.link)
+            self.sendToDiscord(self.link)
             
 if __name__=='__main__':
     scouter1 = Scouter(RTX3070LINK, "3070")
