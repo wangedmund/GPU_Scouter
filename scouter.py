@@ -39,7 +39,7 @@ class Scouter():
             try:
                 elem = driver.find_element(By.XPATH, self.XPATH)
             except:
-                print(self.name + "element could not be found!")
+                print(self.name + " element could not be found!")
                 driver.refresh()
                 continue
             if (elem.text != 'Sold Out'):
