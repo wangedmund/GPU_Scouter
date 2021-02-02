@@ -20,33 +20,34 @@ RYZEN7XPATH = '//button[@data-sku-id = "6439000"]'
 
 LOCAL_PATH = os.getcwd() + "\chromedriver.exe"
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(ChromeDriverManager().install())
 class Scouter():
-    def __init__(self, link, name, XPATH):
+    def __init__(self, link, name, XPATH, driver):
         self.link = link
         self.name = name
         self.XPATH = XPATH
+        
+        self.driver = driver
+
     def sendToDiscord(self, link):
         d = {
         "content": "<@&691835932835577856>\nBuy Now:\n" + link
         }
         requests.post(UWUWEBHOOK, json=d)
+
     def scout(self):
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--no-sandbox")
-        # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-        # 87.0.4280.88
-        driver = webdriver.Chrome(ChromeDriverManager().install())
-        # driver = webdriver.Chrome(LOCAL_PATH)
-        driver.get(self.link)
+        self.driver.get(self.link)
         while True:
             try:
-                elem = driver.find_element(By.XPATH, self.XPATH)
+                elem = self.driver.find_element(By.XPATH, self.XPATH)
             except:
                 print(self.name + " element could not be found!")
-                driver.refresh()
+                self.driver.refresh()
                 continue
             if (elem.text != 'Sold Out'):
                 print(self.name + "'s " +  elem.text + " button found!")
@@ -54,14 +55,20 @@ class Scouter():
                 time.sleep(300)
             else:
                 print(self.name + " sold out!")
-            driver.refresh()
+            self.driver.refresh()
             
-if __name__=='__main__':
-    scouter1 = Scouter(RTX3070LINK, "3070", RTX3070XPATH)
-    scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE)
+if __name__== '__main__':
+    
+    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    # 87.0.4280.88
+    # driver = webdriver.Chrome(LOCAL_PATH)
+    
+    
+    scouter1 = Scouter(RTX3070LINK, "3070", RTX3070XPATH, driver)
+    scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE, driver)
     p1 = Process(target = scouter1.scout)
-    p1.start()
     p2 = Process(target = scouter2.scout)
+    p1.start()
     p2.start()
   
     
