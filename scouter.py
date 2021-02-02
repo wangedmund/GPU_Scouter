@@ -2,7 +2,8 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import os 
-from multiprocessing import Process
+import threading
+import sys
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
@@ -26,6 +27,7 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 driver = webdriver.Chrome(ChromeDriverManager().install())
+driver2 = webdriver.Chrome(ChromeDriverManager().install())
 class Scouter():
     def __init__(self, link, name, XPATH, driver):
         self.link = link
@@ -43,6 +45,7 @@ class Scouter():
     def scout(self):
         self.driver.get(self.link)
         while True:
+            sys.stdout.flush()
             try:
                 elem = self.driver.find_element(By.XPATH, self.XPATH)
             except:
@@ -64,13 +67,12 @@ if __name__== '__main__':
     # driver = webdriver.Chrome(LOCAL_PATH)
     
     
-    scouter1 = Scouter(RTX3070LINK, "3070", RTX3070XPATH, driver)
-    scouter1.scout()
-    # scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE, driver)
-    # p1 = Process(target = scouter1.scout)
-    # p2 = Process(target = scouter2.scout)
-    # p1.start()
-    # p2.start()
+    scouter1 = Scouter(RTX3070LINK, "nvidia 3070", RTX3070XPATH, driver)
+    # scouter1.scout()
+    scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE, driver2)
+    p1 = threading.Thread(target = scouter1.scout).start()
+    p2 = threading.Thread(target = scouter2.scout).start()
+   
   
     
     
