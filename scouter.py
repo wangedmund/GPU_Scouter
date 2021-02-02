@@ -37,7 +37,8 @@ class Scouter():
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
         # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-        driver = webdriver.Chrome(ChromeDriverManager(version="87.0.4280.88").install())
+        # 87.0.4280.88
+        driver = webdriver.Chrome(ChromeDriverManager(version="88.0.4324.96").install())
         # driver = webdriver.Chrome(LOCAL_PATH)
         driver.get(self.link)
         while True:
@@ -56,7 +57,7 @@ class Scouter():
             driver.refresh()
             
 if __name__=='__main__':
-    scouter1 = Scouter(RTX3060TILINK_NVIDIA, "nvidia 3060ti", RTX3060TIXPATH_NVIDIA)
+    scouter1 = Scouter(RTX3070LINK, "3070", RTX3070XPATH)
     scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE)
     p1 = Process(target = scouter1.scout)
     p1.start()
