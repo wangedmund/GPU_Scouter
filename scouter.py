@@ -65,11 +65,12 @@ if __name__== '__main__':
     
     
     scouter1 = Scouter(RTX3070LINK, "3070", RTX3070XPATH, driver)
-    scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE, driver)
-    p1 = Process(target = scouter1.scout)
-    p2 = Process(target = scouter2.scout)
-    p1.start()
-    p2.start()
+    scouter1.scout()
+    # scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE, driver)
+    # p1 = Process(target = scouter1.scout)
+    # p2 = Process(target = scouter2.scout)
+    # p1.start()
+    # p2.start()
   
     
     
