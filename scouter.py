@@ -38,7 +38,7 @@ class Scouter():
         chrome_options.add_argument("--no-sandbox")
         # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
         # 87.0.4280.88
-        driver = webdriver.Chrome(ChromeDriverManager(version="88.0.4324.96").install())
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         # driver = webdriver.Chrome(LOCAL_PATH)
         driver.get(self.link)
         while True:
