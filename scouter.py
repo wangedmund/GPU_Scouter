@@ -26,6 +26,7 @@ chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--example-flag")
 driver = webdriver.Chrome(ChromeDriverManager().install())
 driver2 = webdriver.Chrome(ChromeDriverManager().install())
 class Scouter():
@@ -60,15 +61,8 @@ class Scouter():
                 print(self.name + " sold out!")
             self.driver.refresh()
             
-if __name__== '__main__':
-    
-    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    # 87.0.4280.88
-    # driver = webdriver.Chrome(LOCAL_PATH)
-    
-    
+if __name__=='__main__':
     scouter1 = Scouter(RTX3070LINK, "nvidia 3070", RTX3070XPATH, driver)
-    # scouter1.scout()
     scouter2 = Scouter(RTX3060TILINK_GIGABYTE, "gigabyte 3060ti", RTX3060TIXPATH_GIGABYTE, driver2)
     p1 = threading.Thread(target = scouter1.scout).start()
     p2 = threading.Thread(target = scouter2.scout).start()
