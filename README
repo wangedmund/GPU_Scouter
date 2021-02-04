@@ -1,0 +1,2 @@
+Scouts Best Buy for a Nvidia RTX 3070 graphics card and notifies a discord channel using a webhook to tell people to buy it whenever it is available.
+Utilizes threading package in order to run multiple processes at the same time to scout for more than one item.
